@@ -37,7 +37,8 @@
   <body class="c-public-form cognito-background" >
     <div id="c-forms-container" class="cognito c-safari c-lrg">
 
-      <form action="action.php" method="post">
+      <form method="post" action="{{url('property')}}">
+        {{ csrf_field() }}
         <div class="c-forms-form" tabindex="0">
           <div class="c-editor" style="display:none;">
             <input type="text" class="c-forms-form-style">

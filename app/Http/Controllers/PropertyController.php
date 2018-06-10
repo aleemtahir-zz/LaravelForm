@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use MBence\OpenTBSBundle;
+use App\Property;
 class PropertyController extends Controller
 {
     /**
@@ -34,7 +35,8 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //echo "<pre>"; print_r($request->all()); echo "</pre>";
+        return view('forms.response');
     }
 
     /**
@@ -45,7 +47,25 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-        return view('forms.property');
+        // get the service
+        //$TBS = $this->get('opentbs');
+
+        // Include classes 
+        //include_once('vendor/mbence/opentbs-bundle/MBence/OpenTBSBundle/lib/tbs_class.php'); // Load the TinyButStrong template engine 
+        //include_once('vendor/mbence/opentbs-bundle/MBence/OpenTBSBundle/lib/tbs_plugin_opentbs.php'); // Load the OpenTBS plugin 
+
+        // Initialize the TBS instance 
+        $TBS = new clsTinyButStrong; // new instance of TBS 
+        $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN); // load the OpenTBS plugin
+
+
+        // load your template
+        $TBS->LoadTemplate('templates/membership.docx');
+        // replace variables
+        $TBS->MergeField('a', array('v_first' => 'Ford Prefect'));
+        // send the file
+        $TBS->Show(OPENTBS_DOWNLOAD, 'file_name.docx');
+        //return view('forms.property');
     }
 
     /**
