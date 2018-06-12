@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('property','PropertyController');
+Route::resource('development','DevController');
