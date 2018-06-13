@@ -37,9 +37,13 @@ class DevController extends Controller
     {
         $DevObj = new Development();
 
+        echo "<pre>"; print_r($request->all()); echo "</pre>";
+
         $developer      = $request->input('developer');
-        echo "<pre>"; print_r($developer); echo "</pre>";
         $developer_id   = $DevObj->add_developer($developer);
+
+        //$developement   = $request->input('developement');
+        //$developement_id= $DevObj->add_developement($developement);
 
     }
 

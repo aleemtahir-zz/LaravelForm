@@ -15,21 +15,21 @@ class CreateDevelopementDetail extends Migration
     {
         Schema::create('tbl_developement_detail', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('volume_no');
-            $table->string('plan_no');
-            $table->integer('address')->unsigned();
+            $table->string('name')->nullable();
+            $table->string('volume_no')->nullable();
+            $table->string('plan_no')->nullable();
+            $table->integer('address')->unsigned()->nullable();
             $table->foreign('address')->references('id')->on('tbl_address'); 
-            $table->integer('dev_surveyor')->unsigned(); 
+            $table->integer('dev_surveyor')->unsigned()->nullable(); 
             $table->foreign('dev_surveyor')->references('id')->on('tbl_person_info');
-            $table->integer('total_lots_i');
-            $table->string('total_lots_s');
-            $table->integer('residential_lots_i');
-            $table->string('residential_lots_s');
-            $table->integer('common_lots_i');
-            $table->string('common_lots_s');
-            $table->string('lot_ids');
-            $table->integer('rsrv_road_no');
+            $table->integer('total_lots_i')->nullable();
+            $table->string('total_lots_s')->nullable();
+            $table->integer('residential_lots_i')->nullable();
+            $table->string('residential_lots_s')->nullable();
+            $table->integer('common_lots_i')->nullable();
+            $table->string('common_lots_s')->nullable();
+            $table->string('lot_ids')->nullable();
+            $table->integer('rsrv_road_no')->nullable();
         });
     }
 

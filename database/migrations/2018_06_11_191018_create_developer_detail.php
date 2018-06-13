@@ -15,20 +15,16 @@ class CreateDeveloperDetail extends Migration
     {
         Schema::create('tbl_developer_detail', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('company_name'); 
-            $table->integer('dev_officer1')->unsigned(); 
+            $table->string('company_name')->nullable();
+            $table->integer('dev_officer1')->unsigned()->nullable(); 
             $table->foreign('dev_officer1')->references('id')->on('tbl_person_info'); 
-            $table->integer('dev_officer2')->unsigned();
+            $table->integer('dev_officer2')->unsigned()->nullable();
             $table->foreign('dev_officer2')->references('id')->on('tbl_person_info'); 
-            $table->string('capacity1'); 
-            $table->string('capacity2'); 
-            $table->string('landline1'); 
-            $table->string('landline2'); 
-            $table->string('mobile'); 
-            $table->string('email'); 
-            $table->integer('office_address')->unsigned();
+            $table->string('mobile')->nullable(); 
+            $table->string('email')->nullable();
+            $table->integer('office_address')->unsigned()->nullable();
             $table->foreign('office_address')->references('id')->on('tbl_address'); 
-            $table->string('logo'); 
+            $table->string('logo')->nullable(); 
         });
     }
 

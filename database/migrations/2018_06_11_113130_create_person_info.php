@@ -15,11 +15,13 @@ class CreatePersonInfo extends Migration
     {
         Schema::create('tbl_person_info', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('suffix');
-            $table->string('role');
+            $table->string('title')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('suffix')->nullable();
+            $table->string('capacity')->nullable();
+            $table->string('landline')->nullable();
+            $table->string('role')->nullable();
         });
     }
 
