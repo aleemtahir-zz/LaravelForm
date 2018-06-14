@@ -15,9 +15,8 @@ class CreateDevContractPayment extends Migration
     {
         Schema::create('tbl_dev_contract_payment', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('foriegn_currency')->nullable();
-            $table->string('fc_symbol')->nullable();
-            $table->string('fc_exchange_rate')->nullable();
+            $table->integer('fc_id')->unsigned()->nullable(); 
+            $table->foreign('fc_id')->references('id')->on('tbl_foriegn_currency'); 
             $table->integer('price_i')->nullable();
             $table->string('price_w')->nullable();
             $table->integer('j_price_i')->nullable();

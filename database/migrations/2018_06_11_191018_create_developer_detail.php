@@ -16,14 +16,14 @@ class CreateDeveloperDetail extends Migration
         Schema::create('tbl_developer_detail', function (Blueprint $table) {
             $table->increments('id');
             $table->string('company_name')->nullable();
-            $table->integer('dev_officer1')->unsigned()->nullable(); 
-            $table->foreign('dev_officer1')->references('id')->on('tbl_person_info'); 
-            $table->integer('dev_officer2')->unsigned()->nullable();
-            $table->foreign('dev_officer2')->references('id')->on('tbl_person_info'); 
+            $table->integer('officer_id_1')->unsigned()->nullable(); 
+            $table->foreign('officer_id_1')->references('id')->on('tbl_person_info'); 
+            $table->integer('officer_id_2')->unsigned()->nullable();
+            $table->foreign('officer_id_2')->references('id')->on('tbl_person_info'); 
             $table->string('mobile')->nullable(); 
             $table->string('email')->nullable();
-            $table->integer('office_address')->unsigned()->nullable();
-            $table->foreign('office_address')->references('id')->on('tbl_address'); 
+            $table->integer('address_id')->unsigned()->nullable();
+            $table->foreign('address_id')->references('id')->on('tbl_address'); 
             $table->string('logo')->nullable(); 
         });
     }

@@ -32,7 +32,7 @@ class Development extends Model
             $do1 = $developer['do1'];
             $this->nullToString($do1);
 
-            $dev_officer1 = $this->get_dev_officer($do1,1);
+            $dev_officer1 = $this->get_officer($do1,'developer_officer',1);
         }
                     
         //GET DEVELOPER OFFICER 2
@@ -41,7 +41,7 @@ class Development extends Model
             $do2 = $developer['do2'];
             $this->nullToString($do2);
 
-            $dev_officer2 = $this->get_dev_officer($do2,2);
+            $dev_officer2 = $this->get_officer($do2,'developer_officer',2);
 
         }  
 
@@ -53,11 +53,11 @@ class Development extends Model
         $dev_info = DB::table('tbl_developer_detail')
                        ->select('id')
                        ->where('company_name', '=', $developer['company_name'])
-                       ->where('dev_officer1', '=', $dev_officer1)
-                       ->where('dev_officer2', '=', $dev_officer2)
+                       ->where('officer_id_1', '=', $dev_officer1)
+                       ->where('officer_id_2', '=', $dev_officer2)
                        ->where('mobile', '=', $developer['mobile'])
                        ->where('email', '=', $developer['email'])
-                       ->where('office_address', '=', $address_id)
+                       ->where('address_id', '=', $address_id)
                        ->where('logo', '=', $developer['logo'])
                        ->orderBy('id', 'desc')
                        ->first();
@@ -69,11 +69,11 @@ class Development extends Model
           DB::table('tbl_developer_detail')->insert(
                 [
                     'company_name'  => $developer['company_name'], 
-                    'dev_officer1'  => $dev_officer1, 
-                    'dev_officer2'  => $dev_officer2,
+                    'officer_id_1'  => $dev_officer1, 
+                    'officer_id_2'  => $dev_officer2,
                     'mobile'        => $developer['mobile'],
                     'email'         => $developer['email'],
-                    'office_address'=> $address_id,
+                    'address_id'    => $address_id,
                     'logo'          => $developer['logo']
                 ]
             );
@@ -92,175 +92,90 @@ class Development extends Model
         return $dev_id;
     }
 
-    public function add_developement($developer)
+    public function add_developement($developement, $ids)
     { 
-        $address_id   = null;
-        $dev_officer1 = null;
-        $dev_officer2 = null;
+        $address_id     = null;
+        $officer_id     = null;
+        $developer_id   = $ids['developer'];
+        $contractor_id  = $ids['contractor'];
+        $payment_id     = $ids['payment'];
 
-        //UNSET KEYS WHICH ARE EMPTY
-        $this->scanArray($developer);
+        //GET ADDRESS ID
+        if(!empty($developement['address'])){
 
-        if(!empty($developer['address'])){
-
-          $address_obj = $developer['address'];
+          $address_obj = $developement['address'];
           $this->nullToString($address_obj);
 
-          /*CHECK ADDRESS IF EXIST ALREADY*/
-          $address = DB::table('tbl_address')
-                         ->select('id')
-                         ->where('line1', '=', $address_obj['line1'])
-                         ->where('line2', '=', $address_obj['line2'])
-                         ->where('city', '=', $address_obj['city'])
-                         ->where('state', '=', $address_obj['state'])
-                         ->where('country', '=', $address_obj['country'])
-                         ->orderBy('id', 'desc')
-                         ->first();
-
-
-          if( empty($address) ){
-
-            /*INSERT ADDRESS*/
-            DB::table('tbl_address')->insert(
-                  [
-                      'line1'     => $address_obj['line1'], 
-                      'line2'     => $address_obj['line2'], 
-                      'city'      => $address_obj['city'],
-                      'state'     => $address_obj['state'],
-                      'country'   => $address_obj['country']
-                  ]
-              );
-              /*GET ADDRESS ID */
-              $address_id = DB::getPdo()->lastInsertId();
-          } 
-          else
-          {
-            $address_id = $address->id;
-
-          }      
-          echo "<pre>"; print_r($address_id); echo "</pre>";
+          $address_id = $this->get_address($address_obj);
 
         }
-        echo "<pre>"; print_r($developer); echo "</pre>";
-                
-        if(!empty($developer['do1'])){
+          
+        //GET DEVELOPEMENT SURVEYOR        
+        if(!empty($developement['surveyor'])){
 
-            $do1 = $developer['do1'];
-            $this->nullToString($do1);
+            $surveyor = $developement['surveyor'];
+            $this->nullToString($surveyor);
 
-            /*CHECK DEVELOPER OFFICER IF EXIST ALREADY*/
-            $dev_officer1 = DB::table('tbl_person_info')
-                           ->select('id')
-                           ->where('title', '=', $do1['title1'])
-                           ->where('first_name', '=', $do1['first1'])
-                           ->where('last_name', '=', $do1['last1'])
-                           ->where('suffix', '=', $do1['suffix1'])
-                           ->where('capacity', '=', $do1['capacity1'])
-                           ->where('landline', '=', $do1['landline1'])
-                           ->where('role', '=', 'developer_officer')
-                           ->orderBy('id', 'desc')
-                           ->first();
-
-
-            if( empty($dev_officer1) ){
-
-              /*INSERT DEV OFFICER ID 1 */
-              DB::table('tbl_person_info')->insert(
-                    [
-                        'title'     => $do1['title1'], 
-                        'first_name'=> $do1['first1'], 
-                        'last_name' => $do1['last1'],
-                        'suffix'    => $do1['suffix1'],
-                        'capacity'  => $do1['capacity1'],
-                        'landline'  => $do1['landline1'],
-                        'role'      => 'developer_officer'
-                    ]
-                );
-                /*GET DEV OFFICER ID 1 */
-                $dev_officer1 = DB::getPdo()->lastInsertId();
-            } 
-            else
-            {
-              $dev_officer1 = $dev_officer1->id;
-
-            }
+            $officer_id = $this->get_officer($surveyor,'development_surveyor');
         }
-                    
-
-        if(!empty($developer['do2'])){
-
-            $do2 = $developer['do2'];
-            $this->nullToString($do2);
-
-            /*CHECK DEVELOPER OFFICER IF EXIST ALREADY*/
-            $dev_officer2 = DB::table('tbl_person_info')
-                           ->select('id')
-                           ->where('title', '=', $do2['title2'])
-                           ->where('first_name', '=', $do2['first2'])
-                           ->where('last_name', '=', $do2['last2'])
-                           ->where('suffix', '=', $do2['suffix2'])
-                           ->where('capacity', '=', $do2['capacity2'])
-                           ->where('landline', '=', $do2['landline2'])
-                           ->where('role', '=', 'developer_officer')
-                           ->orderBy('id', 'desc')
-                           ->first();
-
-
-            if( empty($dev_officer2) ){
-
-              /*INSERT DEV OFFICER ID 2 */
-              DB::table('tbl_person_info')->insert(
-                    [
-                        'title'     => $do2['title2'], 
-                        'first_name'=> $do2['first2'], 
-                        'last_name' => $do2['last2'],
-                        'suffix'    => $do2['suffix2'],
-                        'capacity'  => $do2['capacity2'],
-                        'landline'  => $do2['landline2'],
-                        'role'      => 'developer_officer'
-                    ]
-                );
-                /*GET DEV OFFICER ID 2 */
-                $dev_officer2 = DB::getPdo()->lastInsertId();
-            } 
-            else
-            {
-              $dev_officer2 = $dev_officer2->id;
-
-            }
-
-        }  
 
         //******************
-        //ADD DEVELOPER INFO
+        //ADD DEVELOPEMENT INFO
         //******************
+        $total_lots_s       = '';
+        $common_lots_s      = '';
+        $residential_lots_s = '';
 
-        /*CHECK DEVELOPER INFO IF EXIST ALREADY*/
-        $dev_info = DB::table('tbl_developer_detail')
+        if(!empty($developement['t_lots_i']))
+          $total_lots_s = $this->convertNumberToWord($developement['t_lots_i']);
+
+        if(!empty($developement['r_lots_i']))
+          $residential_lots_s = $this->convertNumberToWord($developement['r_lots_i']);
+
+        if(!empty($developement['c_lots_i']))
+          $common_lots_s = $this->convertNumberToWord($developement['c_lots_i']);
+
+        /*CHECK DEVELOPEMENT DETAIL IF EXIST ALREADY*/
+        $dev_info = DB::table('tbl_developement_detail')
                        ->select('id')
-                       ->where('company_name', '=', $developer['company_name'])
-                       ->where('dev_officer1', '=', $dev_officer1)
-                       ->where('dev_officer2', '=', $dev_officer2)
-                       ->where('mobile', '=', $developer['mobile'])
-                       ->where('email', '=', $developer['email'])
-                       ->where('office_address', '=', $address_id)
-                       ->where('logo', '=', $developer['logo'])
+                       ->where('name',            '=', $developement['name'])
+                       ->where('folio_no',        '=', $developement['folio'])
+                       ->where('plan_no',         '=', $developement['plan'])
+                       ->where('address_id',      '=', $address_id)
+                       ->where('surveyor_id',     '=', $officer_id)
+                       ->where('total_lots_i',    '=', $developement['t_lots_i'])
+                       ->where('total_lots_s',    '=', $total_lots_s)
+                       ->where('residential_lots_i', '=', $developement['r_lots_i'])
+                       ->where('residential_lots_s', '=', $residential_lots_s)
+                       ->where('common_lots_i',   '=', $developement['c_lots_i'])
+                       ->where('common_lots_s',   '=', $common_lots_s)
+                       ->where('lot_ids',         '=', $developement['lot_ids'])
+                       ->where('rsrv_road_no',    '=', $developement['rsrv_road'])
                        ->orderBy('id', 'desc')
                        ->first();
 
 
         if( empty($dev_info) ){
 
-          /*INSERT DEV INFO */
-          DB::table('tbl_developer_detail')->insert(
+          /*INSERT DEVELOPEMENT DETAIL */
+          DB::table('tbl_developement_detail')->insert(
                 [
-                    'company_name'  => $developer['company_name'], 
-                    'dev_officer1'  => $dev_officer1, 
-                    'dev_officer2'  => $dev_officer2,
-                    'mobile'        => $developer['mobile'],
-                    'email'         => $developer['email'],
-                    'office_address'=> $address_id,
-                    'logo'          => $developer['logo']
+                    'name'              => $developement['name'], 
+                    'folio_no'          => $developement['folio'], 
+                    'plan_no'           => $developement['plan'], 
+                    'address_id'        => $address_id, 
+                    'surveyor_id'       => $officer_id,
+                    'developer_id'      => $developer_id,
+                    'contractor_id'     => $contractor_id,
+                    'payment_id'        => $payment_id,
+                    'total_lots_i'      => $developement['t_lots_i'],
+                    'total_lots_s'      => $total_lots_s,
+                    'residential_lots_i'=> $developement['r_lots_i'],
+                    'residential_lots_s'=> $residential_lots_s,
+                    'common_lots_i'     => $developement['c_lots_i'],
+                    'common_lots_s'     => $common_lots_s,
+                    'lot_ids'           => $developement['lot_ids'],
+                    'rsrv_road_no'      => $developement['rsrv_road']
                 ]
             );
             /*GET DEV ID */
@@ -273,12 +188,163 @@ class Development extends Model
         }
 
         
-        echo "<pre>"; print_r($dev_officer1); echo "</pre>";
-        echo "<pre>"; print_r($dev_officer2); echo "</pre>";
         echo "<pre>"; print_r($dev_id); echo "</pre>";
         
         return $dev_id;
     }
+
+    public function add_contractor($contractor)
+    { 
+        $address_id  = null;
+        $officer_id  = null;
+
+        //UNSET KEYS WHICH ARE EMPTY
+        $this->scanArray($contractor);
+
+        //GET ADDRESS ID
+        if(!empty($contractor['address'])){
+
+          $address_obj = $contractor['address'];
+          $this->nullToString($address_obj);
+
+          $address_id = $this->get_address($address_obj);
+
+        }
+          
+        //GET CONTRACTOR OFFICER         
+        if(!empty($contractor['co'])){
+
+            $co = $contractor['co'];
+            $this->nullToString($co);
+
+            $officer_id = $this->get_officer($co,'contractor_officer');
+        }
+
+
+        //******************
+        //ADD CONTRACTOR INFO
+        //******************
+
+        /*CHECK contractor INFO IF EXIST ALREADY*/
+        $cont_info = DB::table('tbl_contractor_detail')
+                       ->select('id')
+                       ->where('company_name', '=', $contractor['company_name'])
+                       ->where('officer_id', '=', $officer_id)
+                       ->where('address_id', '=', $address_id)
+                       ->orderBy('id', 'desc')
+                       ->first();
+
+
+        if( empty($cont_info) ){
+
+          /*INSERT DEV INFO */
+          DB::table('tbl_contractor_detail')->insert(
+                [
+                    'company_name'  => $contractor['company_name'], 
+                    'officer_id'  => $officer_id,
+                    'address_id'=> $address_id,
+                ]
+            );
+            /*GET DEV ID */
+            $cont_id = DB::getPdo()->lastInsertId();
+        } 
+        else
+        {
+          $cont_id = $cont_info->id;
+
+        }
+
+        
+        echo "<pre>"; print_r($cont_id); echo "</pre>";
+        
+        return $cont_id;
+    }
+
+    public function add_payment($payment)
+    { 
+        $fc_id       = null;
+
+        //UNSET KEYS WHICH ARE EMPTY
+        $this->scanArray($payment);
+
+        //GET FORIEGN CURRENCY ID
+        if(!empty($payment['fc'])){
+
+          $fc_obj = $payment['fc'];
+          $this->nullToString($fc_obj);
+
+          $fc_id = $this->get_foriegn_currency($fc_obj);
+
+        }
+
+
+        //******************
+        //ADD PAYMENT DETAIL
+        //******************
+        $price_w  = '';
+        $Jprice_w = '';
+
+        if(!empty($payment['price_i']))
+          $price_w = $this->convertNumberToWord($payment['price_i']);
+
+        if(!empty($payment['jprice_i']))
+          $jprice_w = $this->convertNumberToWord($payment['jprice_i']);
+
+        /*CHECK PAYMENT INFO IF EXIST ALREADY*/
+        $payment_info = DB::table('tbl_dev_contract_payment')
+                       ->select('id')
+                       ->where('fc_id', '=', $fc_id)
+                       ->where('price_i', '=', $payment['price_i'])
+                       ->where('price_w', '=', $price_w)
+                       ->where('j_price_i', '=', $payment['jprice_i'])
+                       ->where('j_price_w', '=', $jprice_w)
+                       ->where('deposit', '=', $payment['deposit'])
+                       ->where('second_payment', '=', $payment['scnd_pay'])
+                       ->where('third_payment', '=', $payment['thrd_pay'])
+                       ->where('fourth_payment', '=', $payment['frth_pay'])
+                       ->where('final_payment', '=', $payment['fnl_pay'])
+                       ->orderBy('id', 'desc')
+                       ->first();
+
+
+        if( empty($payment_info) ){
+
+          /*INSERT CONTRACT PAYMENT DETAIL */
+          DB::table('tbl_dev_contract_payment')->insert(
+                [
+                    'fc_id'         => $fc_id, 
+                    'price_i'       => $payment['price_i'],
+                    'price_w'       => $price_w,
+                    'j_price_i'     => $payment['jprice_i'],
+                    'j_price_w'      => $jprice_w,
+                    'deposit'       => $payment['deposit'],
+                    'second_payment'=> $payment['scnd_pay'],
+                    'third_payment' => $payment['thrd_pay'],
+                    'fourth_payment'=> $payment['frth_pay'],
+                    'final_payment' => $payment['fnl_pay'],
+                ]
+            );
+            /*GET CONTRACT PAYMENT ID */
+            $payment_id = DB::getPdo()->lastInsertId();
+        } 
+        else
+        {
+          $payment_id = $payment_info->id;
+
+        }
+
+        
+        echo "<pre>"; print_r($payment_id); echo "</pre>";
+        
+        return $payment_id;
+    }
+
+
+
+
+    //***********************
+    //***HELPER FUNCTION*****
+    //***********************
 
     public function nullToString(&$array)
     {
@@ -313,8 +379,73 @@ class Development extends Model
 
     }
 
+    function convertNumberToWord($num = false)
+    {
+        $num = str_replace(array(',', ' '), '' , trim($num));
+        if(! $num) {
+            return false;
+        }
+        $num = (int) $num;
+        $words = array();
+        $list1 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven',
+            'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
+        );
+        $list2 = array('', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety', 'hundred');
+        $list3 = array('', 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion',
+            'octillion', 'nonillion', 'decillion', 'undecillion', 'duodecillion', 'tredecillion', 'quattuordecillion',
+            'quindecillion', 'sexdecillion', 'septendecillion', 'octodecillion', 'novemdecillion', 'vigintillion'
+        );
+        $num_length = strlen($num);
+        $levels = (int) (($num_length + 2) / 3);
+        $max_length = $levels * 3;
+        $num = substr('00' . $num, -$max_length);
+        $num_levels = str_split($num, 3);
+        for ($i = 0; $i < count($num_levels); $i++) {
+            $levels--;
+            $hundreds = (int) ($num_levels[$i] / 100);
+            $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' hundred' . ' ' : '');
+            $tens = (int) ($num_levels[$i] % 100);
+            $singles = '';
+            if ( $tens < 20 ) {
+                $tens = ($tens ? ' ' . $list1[$tens] . ' ' : '' );
+            } else {
+                $tens = (int)($tens / 10);
+                $tens = ' ' . $list2[$tens] . ' ';
+                $singles = (int) ($num_levels[$i] % 10);
+                $singles = ' ' . $list1[$singles] . ' ';
+            }
+            $words[] = $hundreds . $tens . $singles . ( ( $levels && ( int ) ( $num_levels[$i] ) ) ? ' ' . $list3[$levels] . ' ' : '' );
+        } //end for loop
+        $commas = count($words);
+        if ($commas > 1) {
+            $commas = $commas - 1;
+        }
+        $words = trim(implode(' ', $words) , " ");
+        //Remove Duplicate White Space
+        $words = preg_replace('!\s+!', ' ', $words);
+        //Upper Case
+        $words = ucwords($words);
+
+        return $words;
+    }
+
     public function get_address($address)
     {
+
+      $mapper = array(
+        'line1',
+        'line2',
+        'city',
+        'state',
+        'country',
+      );
+
+      foreach ($mapper as $key) {
+
+        if( !array_key_exists($key, $address) )
+          $address[$key] = '';
+      }
+
       /*CHECK ADDRESS IF EXIST ALREADY*/
       $result = DB::table('tbl_address')
                      ->select('id')
@@ -351,19 +482,34 @@ class Development extends Model
       return $address_id;
     }
 
-    public function get_dev_officer($dev_officer, $postfix='')
+    public function get_officer($officer, $source='', $postfix='')
     {
+
+      $mapper = array(
+        'title',
+        'first_name',
+        'last_name',
+        'suffix',
+        'capacity',
+        'landline',
+      );
+
+      foreach ($mapper as $key) {
+
+        if( !array_key_exists($key, $officer) )
+          $officer[$key] = '';
+      }
 
       /*CHECK DEVELOPER OFFICER IF EXIST ALREADY*/
       $result = DB::table('tbl_person_info')
                      ->select('id')
-                     ->where('title', '=', $dev_officer['title'.$postfix])
-                     ->where('first_name', '=', $dev_officer['first'.$postfix])
-                     ->where('last_name', '=', $dev_officer['last'.$postfix])
-                     ->where('suffix', '=', $dev_officer['suffix'.$postfix])
-                     ->where('capacity', '=', $dev_officer['capacity'.$postfix])
-                     ->where('landline', '=', $dev_officer['landline'.$postfix])
-                     ->where('role', '=', 'developer_officer')
+                     ->where('title', '=', $officer['title'.$postfix]) 
+                     ->where('first_name', '=', $officer['first'.$postfix])
+                     ->where('last_name', '=', $officer['last'.$postfix])
+                     ->where('suffix', '=', $officer['suffix'.$postfix])
+                     ->where('capacity', '=', $officer['capacity'.$postfix])
+                     ->where('landline', '=', $officer['landline'.$postfix])
+                     ->where('source', '=', $source)
                      ->orderBy('id', 'desc')
                      ->first();
 
@@ -373,26 +519,70 @@ class Development extends Model
         /*INSERT DEV OFFICER */
         DB::table('tbl_person_info')->insert(
               [
-                  'title'     => $dev_officer['title'.$postfix], 
-                  'first_name'=> $dev_officer['first'.$postfix], 
-                  'last_name' => $dev_officer['last'.$postfix],
-                  'suffix'    => $dev_officer['suffix'.$postfix],
-                  'capacity'  => $dev_officer['capacity'.$postfix],
-                  'landline'  => $dev_officer['landline'.$postfix],
-                  'role'      => 'developer_officer'
+                  'title'     => $officer['title'.$postfix], 
+                  'first_name'=> $officer['first'.$postfix], 
+                  'last_name' => $officer['last'.$postfix],
+                  'suffix'    => $officer['suffix'.$postfix],
+                  'capacity'  => $officer['capacity'.$postfix],
+                  'landline'  => $officer['landline'.$postfix],
+                  'source'      => $source
               ]
           );
           /*GET DEV OFFICER ID */
-          $dev_officer_id = DB::getPdo()->lastInsertId();
+          $officer_id = DB::getPdo()->lastInsertId();
       } 
       else
       {
-        $dev_officer_id = $result->id;
+        $officer_id = $result->id;
       }
       
-      return $dev_officer_id;
+      return $officer_id;
 
     }
 
+    public function get_foriegn_currency($currency)
+    {
+      $mapper = array(
+        'name',
+        'symbol',
+        'rate',
+      );
 
+      foreach ($mapper as $key) {
+
+        if( !array_key_exists($key, $currency) )
+          $currency[$key] = '';
+      }
+
+      /*CHECK CURRENCY IF EXIST ALREADY*/
+      $result = DB::table('tbl_foriegn_currency')
+                     ->select('id')
+                     ->where('name', '=', $currency['name']) 
+                     ->where('symbol', '=', $currency['symbol'])
+                     ->where('exchange_rate', '=', $currency['rate'])
+                     ->orderBy('id', 'desc')
+                     ->first();
+
+
+      if( empty($result) ){
+
+        /*INSERT CURRENCY */
+        DB::table('tbl_foriegn_currency')->insert(
+              [
+                  'name'     => $currency['name'], 
+                  'symbol'=> $currency['symbol'], 
+                  'exchange_rate' => $currency['rate'],
+              ]
+          );
+          /*GET CURRENCY ID */
+          $currency_id = DB::getPdo()->lastInsertId();
+      } 
+      else
+      {
+        $currency_id = $result->id;
+      }
+      
+      return $currency_id;
+
+    }
 }

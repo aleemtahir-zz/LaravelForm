@@ -1,6 +1,7 @@
 a.c-add-item{
 	text-decoration: none;
 }
-.cognito .c-forms-form .c-placeholder-text-styled {
-    color: #cccccc;
+
+select{
+	color: '' !important;
 }

@@ -21,7 +21,7 @@ class CreatePersonInfo extends Migration
             $table->string('suffix')->nullable();
             $table->string('capacity')->nullable();
             $table->string('landline')->nullable();
-            $table->string('role')->nullable();
+            $table->string('source')->nullable();
         });
     }
 
