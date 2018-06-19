@@ -15,11 +15,12 @@ class CreateAddress extends Migration
     {
         Schema::create('tbl_address', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('line1');
-            $table->string('line2');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
+            $table->string('line1')->nullable();
+            $table->string('line2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postal')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
         });
     }
 

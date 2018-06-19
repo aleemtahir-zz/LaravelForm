@@ -2513,7 +2513,7 @@
 .cognito .c-editor-date+div,.cognito .c-editor-time+div {
     display: inline-block;
     vertical-align: middle;
-    padding: 6px!important;
+    padding: 2px!important;
     cursor: pointer
 }
 

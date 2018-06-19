@@ -14,15 +14,15 @@ class Development extends Model
         $dev_officer2 = null;
 
         //UNSET KEYS WHICH ARE EMPTY
-        $this->scanArray($developer);
+        scanArray($developer);
 
         //GET ADDRESS ID
         if(!empty($developer['address'])){
 
           $address_obj = $developer['address'];
-          $this->nullToString($address_obj);
+          nullToString($address_obj);
 
-          $address_id = $this->get_address($address_obj);
+          $address_id = get_address($address_obj);
 
         }
           
@@ -30,18 +30,18 @@ class Development extends Model
         if(!empty($developer['do1'])){
 
             $do1 = $developer['do1'];
-            $this->nullToString($do1);
+            nullToString($do1);
 
-            $dev_officer1 = $this->get_officer($do1,'developer_officer',1);
+            $dev_officer1 = get_officer($do1,'developer_officer',1);
         }
                     
         //GET DEVELOPER OFFICER 2
         if(!empty($developer['do2'])){
 
             $do2 = $developer['do2'];
-            $this->nullToString($do2);
+            nullToString($do2);
 
-            $dev_officer2 = $this->get_officer($do2,'developer_officer',2);
+            $dev_officer2 = get_officer($do2,'developer_officer',2);
 
         }  
 
@@ -85,9 +85,8 @@ class Development extends Model
           $dev_id = $dev_info->id;
 
         }
-
         
-        echo "<pre>"; print_r($dev_id); echo "</pre>";
+        //echo "<pre>"; print_r($dev_id); echo "</pre>";
         
         return $dev_id;
     }
@@ -104,9 +103,9 @@ class Development extends Model
         if(!empty($developement['address'])){
 
           $address_obj = $developement['address'];
-          $this->nullToString($address_obj);
+          nullToString($address_obj);
 
-          $address_id = $this->get_address($address_obj);
+          $address_id = get_address($address_obj);
 
         }
           
@@ -114,33 +113,33 @@ class Development extends Model
         if(!empty($developement['surveyor'])){
 
             $surveyor = $developement['surveyor'];
-            $this->nullToString($surveyor);
+            nullToString($surveyor);
 
-            $officer_id = $this->get_officer($surveyor,'development_surveyor');
+            $officer_id = get_officer($surveyor,'development_surveyor');
         }
 
         //******************
         //ADD DEVELOPEMENT INFO
         //******************
-        $total_lots_s       = '';
-        $common_lots_s      = '';
-        $residential_lots_s = '';
+        $total_lots_s       = null;
+        $common_lots_s      = null;
+        $residential_lots_s = null;
 
         if(!empty($developement['t_lots_i']))
-          $total_lots_s = $this->convertNumberToWord($developement['t_lots_i']);
+          $total_lots_s = convertNumberToWord($developement['t_lots_i']);
 
         if(!empty($developement['r_lots_i']))
-          $residential_lots_s = $this->convertNumberToWord($developement['r_lots_i']);
+          $residential_lots_s = convertNumberToWord($developement['r_lots_i']);
 
         if(!empty($developement['c_lots_i']))
-          $common_lots_s = $this->convertNumberToWord($developement['c_lots_i']);
+          $common_lots_s = convertNumberToWord($developement['c_lots_i']);
 
         /*CHECK DEVELOPEMENT DETAIL IF EXIST ALREADY*/
         $dev_info = DB::table('tbl_developement_detail')
                        ->select('id')
                        ->where('name',            '=', $developement['name'])
-                       ->where('folio_no',        '=', $developement['folio'])
-                       ->where('plan_no',         '=', $developement['plan'])
+                       ->where('folio_no',        '=', $developement['folio_no'])
+                       ->where('plan_no',         '=', $developement['plan_no'])
                        ->where('address_id',      '=', $address_id)
                        ->where('surveyor_id',     '=', $officer_id)
                        ->where('total_lots_i',    '=', $developement['t_lots_i'])
@@ -161,8 +160,8 @@ class Development extends Model
           DB::table('tbl_developement_detail')->insert(
                 [
                     'name'              => $developement['name'], 
-                    'folio_no'          => $developement['folio'], 
-                    'plan_no'           => $developement['plan'], 
+                    'folio_no'          => $developement['folio_no'], 
+                    'plan_no'           => $developement['plan_no'], 
                     'address_id'        => $address_id, 
                     'surveyor_id'       => $officer_id,
                     'developer_id'      => $developer_id,
@@ -187,8 +186,7 @@ class Development extends Model
 
         }
 
-        
-        echo "<pre>"; print_r($dev_id); echo "</pre>";
+        //echo "<pre>"; print_r($dev_id); echo "</pre>";
         
         return $dev_id;
     }
@@ -205,9 +203,9 @@ class Development extends Model
         if(!empty($contractor['address'])){
 
           $address_obj = $contractor['address'];
-          $this->nullToString($address_obj);
+          nullToString($address_obj);
 
-          $address_id = $this->get_address($address_obj);
+          $address_id = get_address($address_obj);
 
         }
           
@@ -215,9 +213,9 @@ class Development extends Model
         if(!empty($contractor['co'])){
 
             $co = $contractor['co'];
-            $this->nullToString($co);
+            nullToString($co);
 
-            $officer_id = $this->get_officer($co,'contractor_officer');
+            $officer_id = get_officer($co,'contractor_officer');
         }
 
 
@@ -254,8 +252,7 @@ class Development extends Model
 
         }
 
-        
-        echo "<pre>"; print_r($cont_id); echo "</pre>";
+        //echo "<pre>"; print_r($cont_id); echo "</pre>";
         
         return $cont_id;
     }
@@ -271,9 +268,9 @@ class Development extends Model
         if(!empty($payment['fc'])){
 
           $fc_obj = $payment['fc'];
-          $this->nullToString($fc_obj);
+          nullToString($fc_obj);
 
-          $fc_id = $this->get_foriegn_currency($fc_obj);
+          $fc_id = get_foriegn_currency($fc_obj);
 
         }
 
@@ -281,14 +278,14 @@ class Development extends Model
         //******************
         //ADD PAYMENT DETAIL
         //******************
-        $price_w  = '';
-        $Jprice_w = '';
+        $price_w  = null;
+        $jprice_w = null;
 
         if(!empty($payment['price_i']))
-          $price_w = $this->convertNumberToWord($payment['price_i']);
+          $price_w = convertNumberToWord($payment['price_i']);
 
         if(!empty($payment['jprice_i']))
-          $jprice_w = $this->convertNumberToWord($payment['jprice_i']);
+          $jprice_w = convertNumberToWord($payment['jprice_i']);
 
         /*CHECK PAYMENT INFO IF EXIST ALREADY*/
         $payment_info = DB::table('tbl_dev_contract_payment')
@@ -333,256 +330,10 @@ class Development extends Model
 
         }
 
-        
-        echo "<pre>"; print_r($payment_id); echo "</pre>";
+        //echo "<pre>"; print_r($payment_id); echo "</pre>";
         
         return $payment_id;
     }
 
 
-
-
-    //***********************
-    //***HELPER FUNCTION*****
-    //***********************
-
-    public function nullToString(&$array)
-    {
-      foreach ($array as $key => &$value) {
-        if($array[$key] == null){
-          $value = "";
-        }
-      }
-    }
-
-    public function scanArray(&$array)
-    {
-        foreach ($array as $key => $value) {
-
-            if( is_array($value) ){
-              $values = array_values($value);
-
-              foreach ($values as $k => $v) {
-                if(empty($v))
-                  unset($values[$k]);
-              }
-              if(empty($values))
-                unset($array[$key]);
-            }
-            /*else
-            {
-              if(empty($value))
-                unset($array[$key]);
-            }*/
-
-        }
-
-    }
-
-    function convertNumberToWord($num = false)
-    {
-        $num = str_replace(array(',', ' '), '' , trim($num));
-        if(! $num) {
-            return false;
-        }
-        $num = (int) $num;
-        $words = array();
-        $list1 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven',
-            'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
-        );
-        $list2 = array('', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety', 'hundred');
-        $list3 = array('', 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion',
-            'octillion', 'nonillion', 'decillion', 'undecillion', 'duodecillion', 'tredecillion', 'quattuordecillion',
-            'quindecillion', 'sexdecillion', 'septendecillion', 'octodecillion', 'novemdecillion', 'vigintillion'
-        );
-        $num_length = strlen($num);
-        $levels = (int) (($num_length + 2) / 3);
-        $max_length = $levels * 3;
-        $num = substr('00' . $num, -$max_length);
-        $num_levels = str_split($num, 3);
-        for ($i = 0; $i < count($num_levels); $i++) {
-            $levels--;
-            $hundreds = (int) ($num_levels[$i] / 100);
-            $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' hundred' . ' ' : '');
-            $tens = (int) ($num_levels[$i] % 100);
-            $singles = '';
-            if ( $tens < 20 ) {
-                $tens = ($tens ? ' ' . $list1[$tens] . ' ' : '' );
-            } else {
-                $tens = (int)($tens / 10);
-                $tens = ' ' . $list2[$tens] . ' ';
-                $singles = (int) ($num_levels[$i] % 10);
-                $singles = ' ' . $list1[$singles] . ' ';
-            }
-            $words[] = $hundreds . $tens . $singles . ( ( $levels && ( int ) ( $num_levels[$i] ) ) ? ' ' . $list3[$levels] . ' ' : '' );
-        } //end for loop
-        $commas = count($words);
-        if ($commas > 1) {
-            $commas = $commas - 1;
-        }
-        $words = trim(implode(' ', $words) , " ");
-        //Remove Duplicate White Space
-        $words = preg_replace('!\s+!', ' ', $words);
-        //Upper Case
-        $words = ucwords($words);
-
-        return $words;
-    }
-
-    public function get_address($address)
-    {
-
-      $mapper = array(
-        'line1',
-        'line2',
-        'city',
-        'state',
-        'country',
-      );
-
-      foreach ($mapper as $key) {
-
-        if( !array_key_exists($key, $address) )
-          $address[$key] = '';
-      }
-
-      /*CHECK ADDRESS IF EXIST ALREADY*/
-      $result = DB::table('tbl_address')
-                     ->select('id')
-                     ->where('line1', '=', $address['line1'])
-                     ->where('line2', '=', $address['line2'])
-                     ->where('city', '=', $address['city'])
-                     ->where('state', '=', $address['state'])
-                     ->where('country', '=', $address['country'])
-                     ->orderBy('id', 'desc')
-                     ->first();
-
-
-      if( empty($result) ){
-
-        /*INSERT ADDRESS*/
-        DB::table('tbl_address')->insert(
-              [
-                  'line1'     => $address['line1'], 
-                  'line2'     => $address['line2'], 
-                  'city'      => $address['city'],
-                  'state'     => $address['state'],
-                  'country'   => $address['country']
-              ]
-          );
-          /*GET ADDRESS ID */
-          $address_id = DB::getPdo()->lastInsertId();
-      } 
-      else
-      {
-        $address_id = $result->id;
-
-      }
-
-      return $address_id;
-    }
-
-    public function get_officer($officer, $source='', $postfix='')
-    {
-
-      $mapper = array(
-        'title',
-        'first_name',
-        'last_name',
-        'suffix',
-        'capacity',
-        'landline',
-      );
-
-      foreach ($mapper as $key) {
-
-        if( !array_key_exists($key, $officer) )
-          $officer[$key] = '';
-      }
-
-      /*CHECK DEVELOPER OFFICER IF EXIST ALREADY*/
-      $result = DB::table('tbl_person_info')
-                     ->select('id')
-                     ->where('title', '=', $officer['title'.$postfix]) 
-                     ->where('first_name', '=', $officer['first'.$postfix])
-                     ->where('last_name', '=', $officer['last'.$postfix])
-                     ->where('suffix', '=', $officer['suffix'.$postfix])
-                     ->where('capacity', '=', $officer['capacity'.$postfix])
-                     ->where('landline', '=', $officer['landline'.$postfix])
-                     ->where('source', '=', $source)
-                     ->orderBy('id', 'desc')
-                     ->first();
-
-
-      if( empty($result) ){
-
-        /*INSERT DEV OFFICER */
-        DB::table('tbl_person_info')->insert(
-              [
-                  'title'     => $officer['title'.$postfix], 
-                  'first_name'=> $officer['first'.$postfix], 
-                  'last_name' => $officer['last'.$postfix],
-                  'suffix'    => $officer['suffix'.$postfix],
-                  'capacity'  => $officer['capacity'.$postfix],
-                  'landline'  => $officer['landline'.$postfix],
-                  'source'      => $source
-              ]
-          );
-          /*GET DEV OFFICER ID */
-          $officer_id = DB::getPdo()->lastInsertId();
-      } 
-      else
-      {
-        $officer_id = $result->id;
-      }
-      
-      return $officer_id;
-
-    }
-
-    public function get_foriegn_currency($currency)
-    {
-      $mapper = array(
-        'name',
-        'symbol',
-        'rate',
-      );
-
-      foreach ($mapper as $key) {
-
-        if( !array_key_exists($key, $currency) )
-          $currency[$key] = '';
-      }
-
-      /*CHECK CURRENCY IF EXIST ALREADY*/
-      $result = DB::table('tbl_foriegn_currency')
-                     ->select('id')
-                     ->where('name', '=', $currency['name']) 
-                     ->where('symbol', '=', $currency['symbol'])
-                     ->where('exchange_rate', '=', $currency['rate'])
-                     ->orderBy('id', 'desc')
-                     ->first();
-
-
-      if( empty($result) ){
-
-        /*INSERT CURRENCY */
-        DB::table('tbl_foriegn_currency')->insert(
-              [
-                  'name'     => $currency['name'], 
-                  'symbol'=> $currency['symbol'], 
-                  'exchange_rate' => $currency['rate'],
-              ]
-          );
-          /*GET CURRENCY ID */
-          $currency_id = DB::getPdo()->lastInsertId();
-      } 
-      else
-      {
-        $currency_id = $result->id;
-      }
-      
-      return $currency_id;
-
-    }
 }

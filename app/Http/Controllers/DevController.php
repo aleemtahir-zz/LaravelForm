@@ -37,7 +37,7 @@ class DevController extends Controller
     {
         $DevObj = new Development();
 
-        echo "<pre>"; print_r($request->all()); echo "</pre>";
+        //echo "<pre>"; print_r($request->all()); echo "</pre>";
 
         $developer          = $request->input('developer');
         $ids['developer']   = $DevObj->add_developer($developer);
@@ -50,6 +50,8 @@ class DevController extends Controller
 
         $developement       = $request->input('developement');
         $developement_id    = $DevObj->add_developement($developement, $ids);
+
+        return view('forms.thank_you');
 
     }
 

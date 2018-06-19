@@ -823,6 +823,7 @@ html,body{
      font-family: 'Open Sans Condensed',Helvetica,sans-serif;
      font-size: 1.5em;
      color:#000000;
+     font-weight: bold;
      line-height:1.15em;
 }
  .cognito .c-forms-form .c-forms-description{
@@ -842,6 +843,7 @@ html,body{
  .cognito .c-forms-form h1, .cognito .c-forms-form h2,.cognito .c-forms-form h3, .cognito .c-forms-form h4, .cognito .c-forms-form h5, .cognito .c-forms-form h6{
     font-family: 'Open Sans Condensed',Helvetica,sans-serif;
     color:#000000;
+    font-weight: bold;
     line-height:1.2em;
 }
  .cognito .c-forms-form h1,.cognito .c-forms-form h2,.cognito .c-forms-form h3{

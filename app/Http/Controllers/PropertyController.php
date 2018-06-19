@@ -34,8 +34,27 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        //echo "<pre>"; print_r($request->all()); echo "</pre>";
-        return view('forms.response');
+        echo "<pre>"; print_r($request->all()); echo "</pre>";
+        $PropertyObj = new Property();
+
+        $vendor             = $request->input('vendor');
+        $ids['vendor']      = $PropertyObj->add_developer($vendor);
+
+        $payment            = $request->input('monetary');
+        $ids['payment']     = $PropertyObj->add_payment($payment);
+
+        $buyer              = $request->input('buyer');
+        $ids['buyer']       = $PropertyObj->add_purchaser($buyer);
+
+        $attorney           = $request->input('attorney');
+        $ids['attorney']    = $PropertyObj->add_attorney($attorney);
+
+        
+        $property           = $request->input('property');
+        $property_id        = $PropertyObj->add_property($property, $ids);
+        die;
+
+        //return view('forms.response');
     }
 
     /**
