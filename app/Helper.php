@@ -382,7 +382,7 @@ function upload_logo( $filename='')
   $target_dir = realpath(dirname(getcwd())).'\uploads\\';
   $target_file = $target_dir . basename($_FILES[$filename]["name"]);
   $uploadOk = 1;
-  $msg = '';
+  $msg = array();
   $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
   // Check if image file is a actual image or fake image
   /*if(isset($_POST["submit"])) {

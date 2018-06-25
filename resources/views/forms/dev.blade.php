@@ -31,7 +31,189 @@
                         </div>
                     </div>
                     <div class="c-forms-pages">
-                        <div class="c-page-page1" style="display: block;">
+                      <div class="c-page-page1" style="display: block;">
+                          <div class="c-forms-template">
+                              <div class="c-page toggle-off" >
+                                  <div class="c-section c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
+                                      <div class="c-title">
+                                          <h3>DEVELOPMENT DETAILS</h3>
+                                      </div>
+                                      <div class="">
+                                          <div class="c-field c-col-17 c-sml-col-1 c-span-10 c-sml-span-6">
+                                              <div class="c-label  "><label for="c-25-1628">Volume / Folio</label></div>
+                                              <div class="c-editor"><input name="developement[folio_no]" type="text" id="c-25-1628" placeholder=""></div>
+                                              <div class="c-validation"></div>
+
+                                          </div> 
+                                          <div style="margin-top: 13px;" class="c-text-singleline c-field c-col-21 c-sml-col-5 c-span-5 c-sml-span-6"><button type="button" class="c-button" onclick="fetchRecord()">Fetch Record</button></div>
+
+                                          <div  id="c-message" class="c-text-singleline c-field c-col-21 c-sml-col-5 c-span-8 c-sml-span-6">
+                                          </div> 
+                                          <div class="c-text-singleline c-field c-col-1 c-sml-col-1 c-span-16 c-sml-span-12">
+                                              <div class="c-label  "><label for="c-24-1629">Name of Development</label></div>
+                                              <div class="c-editor"><input name="developement[name]" type="text" id="c-24-1629" placeholder="eg  City View Villas"></div>
+                                              <div class="c-validation"></div>
+                                          </div>
+                                          <div class="c-text-singleline c-field c-col-21 c-sml-col-5 c-span-8 c-sml-span-6">
+                                              <div class="c-label  "><label for="c-26-1627">Plan No.</label></div>
+                                              <div class="c-editor"><input name="developement[plan_no]" type="text" id="c-26-1627" placeholder="Plan number"></div>
+                                              <div class="c-validation"></div>
+                                          </div>
+                                          <div class="c-address c-address-us c-field c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
+                                              <div class="c-label "><label>Address</label></div>
+                                              <div>
+                                                  <div class="c-offscreen"><label for="c-27-1626">Address Line 1</label></div>
+                                                  <div class="c-editor" style="float: left;"><input name="developement[address][line1]" type="text" id="c-27-1626" placeholder="Address Line 1"></div>
+                                                  <div class="c-offscreen"><label for="c-28-1626">Address Line 2</label></div>
+                                                  <div class="c-editor" style="float: left;"><input name="developement[address][line2]" type="text" id="c-28-1626" placeholder="Address Line 2"></div>
+                                                  <div class="c-offscreen"><label for="c-29-1626">City</label></div>
+                                                  <div class="c-editor c-partial-line" style="float: left;"><input name="developement[address][city]" type="text" id="c-29-1626" placeholder="City"></div>
+                                                  <div class="c-offscreen"><label for="c-30-1626">State</label></div>
+                                                  <div class="c-editor c-partial-line" style="float: left;">
+                                                      <div class="c-dropdown">
+                                                          <select name="developement[address][state]" id="c-30-1626" class="c-placeholder-text-styled ">
+                                                              <option value="">State</option>
+                                                              <option value="Armed Forces America">Armed Forces America</option>
+                                                              <option value="Armed Forces">Armed Forces</option>
+                                                              <option value="Armed Forces Pacific">Armed Forces Pacific</option>
+                                                              <option value="Alabama">Alabama</option>
+                                                              <option value="Alaska">Alaska</option>
+                                                              <option value="Arizona">Arizona</option>
+                                                              <option value="Arkansas">Arkansas</option>
+                                                              <option value="California">California</option>
+                                                              <option value="Colorado">Colorado</option>
+                                                              <option value="Connecticut">Connecticut</option>
+                                                              <option value="District of Columbia">District of Columbia</option>
+                                                              <option value="Delaware">Delaware</option>
+                                                              <option value="Florida">Florida</option>
+                                                              <option value="Georgia">Georgia</option>
+                                                              <option value="Guam">Guam</option>
+                                                              <option value="Hawaii">Hawaii</option>
+                                                              <option value="Idaho">Idaho</option>
+                                                              <option value="Illinois">Illinois</option>
+                                                              <option value="Indiana">Indiana</option>
+                                                              <option value="Iowa">Iowa</option>
+                                                              <option value="Kansas">Kansas</option>
+                                                              <option value="Kentucky">Kentucky</option>
+                                                              <option value="Louisiana">Louisiana</option>
+                                                              <option value="Maine">Maine</option>
+                                                              <option value="Maryland">Maryland</option>
+                                                              <option value="Massachusetts">Massachusetts</option>
+                                                              <option value="Michigan">Michigan</option>
+                                                              <option value="Minnesota">Minnesota</option>
+                                                              <option value="Mississippi">Mississippi</option>
+                                                              <option value="Missouri">Missouri</option>
+                                                              <option value="Montana">Montana</option>
+                                                              <option value="Nebraska">Nebraska</option>
+                                                              <option value="New Hampshire">New Hampshire</option>
+                                                              <option value="New Jersey">New Jersey</option>
+                                                              <option value="New Mexico">New Mexico</option>
+                                                              <option value="New York">New York</option>
+                                                              <option value="Nevada">Nevada</option>
+                                                              <option value="North Carolina">North Carolina</option>
+                                                              <option value="North Dakota">North Dakota</option>
+                                                              <option value="Ohio">Ohio</option>
+                                                              <option value="Oklahoma">Oklahoma</option>
+                                                              <option value="Oregon">Oregon</option>
+                                                              <option value="Pennsylvania">Pennsylvania</option>
+                                                              <option value="Puerto Rico">Puerto Rico</option>
+                                                              <option value="Rhode Island">Rhode Island</option>
+                                                              <option value="South Carolina">South Carolina</option>
+                                                              <option value="South Dakota">South Dakota</option>
+                                                              <option value="Tennessee">Tennessee</option>
+                                                              <option value="Texas">Texas</option>
+                                                              <option value="Utah">Utah</option>
+                                                              <option value="Vermont">Vermont</option>
+                                                              <option value="Virgin Islands">Virgin Islands</option>
+                                                              <option value="Virginia">Virginia</option>
+                                                              <option value="Washington">Washington</option>
+                                                              <option value="West Virginia">West Virginia</option>
+                                                              <option value="Wisconsin">Wisconsin</option>
+                                                              <option value="Wyoming">Wyoming</option>
+                                                          </select>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="c-validation"></div>
+                                          </div>
+                                          <div class="c-name c-field c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
+                                              <div class="c-label "><label>Development Surveyor</label></div>
+                                              <div>
+                                                  <div class="c-offscreen"><label for="c-32-1625">Title</label></div>
+                                                  <div class="c-editor c-span-1" style="width: 20%; float: left;"><input name="developement[surveyor][title]" type="text" id="c-32-1625" placeholder="Title"></div>
+                                                  <div class="c-offscreen"><label for="c-33-1625">First</label></div>
+                                                  <div class="c-editor c-span-1" style="width: 40%; float: left;"><input name="developement[surveyor][first]" type="text" id="c-33-1625" placeholder="First"></div>
+                                                  <div class="c-offscreen"><label for="c-34-1625">Last</label></div>
+                                                  <div class="c-editor c-span-1" style="width: 40%; float: left;"><input name="developement[surveyor][last]" type="text" id="c-34-1625" placeholder="Last"></div>
+                                              </div>
+                                              <div class="c-validation"></div>
+                                          </div>
+                                          <div class="c-section c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
+                                              <div class="c-title">
+                                                  <h4>Lots (Subdivisions)</h4>
+                                              </div>
+                                              <div class="">
+                                                  <div class="c-number-integer c-field c-col-1 c-sml-col-1 c-span-8 c-sml-span-12">
+                                                      <div class="c-label  "><label for="c-36-1624">Total # of Lots in numerals</label></div>
+                                                      <div class="c-editor"><input name="developement[t_lots_i]" type="text" id="c-36-1624" placeholder="65"></div>
+                                                      <div class="c-validation"></div>
+                                                      <div class="c-helptext">Total amount of Lots, in numerals</div>
+                                                  </div>
+                                                  <div class="c-text-singleline c-field c-col-9 c-sml-col-1 c-span-16 c-sml-span-12">
+                                                      <div class="c-label  "><label for="c-37-1623">Total Amount of lots in words</label></div>
+                                                      <div class="c-editor"><input name="developement[t_lots_w]" type="text" id="c-37-1623" placeholder="sixty-five" maxlength="50"></div>
+                                                      <div class="c-validation"></div>
+                                                      <div class="c-helptext">Input the total amount of Lots / Subdivisions, in words</div>
+                                                  </div>
+                                                  <div class="c-number-integer c-field c-col-1 c-sml-col-1 c-span-8 c-sml-span-12">
+                                                      <div class="c-label  "><label for="c-38-1622"># of Residential Lots in numerals</label></div>
+                                                      <div class="c-editor"><input name="developement[r_lots_i]" type="text" id="c-38-1622" placeholder="51"></div>
+                                                      <div class="c-validation"></div>
+                                                      <div class="c-helptext">Amount of Residential Lots in numerals</div>
+                                                  </div>
+                                                  <div class="c-text-singleline c-field c-col-9 c-sml-col-1 c-span-16 c-sml-span-12">
+                                                      <div class="c-label  "><label for="c-39-1621"># of Residential Lots in words</label></div>
+                                                      <div class="c-editor"><input name="developement[r_lots_w]" type="text" id="c-39-1621" placeholder="fifty-one" maxlength="50"></div>
+                                                      <div class="c-validation"></div>
+                                                      <div class="c-helptext">Input the amount of Residential Lots in words</div>
+                                                  </div>
+                                                  <div class="c-number-integer c-field c-col-1 c-sml-col-1 c-span-8 c-sml-span-12">
+                                                      <div class="c-label  "><label for="c-40-1620"># of Common Area Lots in numerals</label></div>
+                                                      <div class="c-editor"><input name="developement[c_lots_i]" type="text" id="c-40-1620" placeholder="14"></div>
+                                                      <div class="c-validation"></div>
+                                                      <div class="c-helptext">Input the amount of Common Area Lots in numerals</div>
+                                                  </div>
+                                                  <div class="c-text-singleline c-field c-col-9 c-sml-col-1 c-span-16 c-sml-span-12">
+                                                      <div class="c-label  "><label for="c-41-1619">#of Common Area Lots in words</label></div>
+                                                      <div class="c-editor"><input name="developement[c_lots_w]" type="text" id="c-41-1619" placeholder="fourteen" maxlength="50"></div>
+                                                      <div class="c-validation"></div>
+                                                      <div class="c-helptext">Input the amount of Common Area Lots in words</div>
+                                                  </div>
+                                                  <div class="c-text-multiplelines c-field c-col-1 c-sml-col-1 c-span-12 c-sml-span-12">
+                                                      <div class="c-label  "><label for="c-42-1618">Lot ID numbers</label></div>
+                                                      <div class="c-editor"><textarea name="developement[lot_ids]" id="c-42-1618" placeholder="1 - 45, 51 - 59, 64" type="text" height=""></textarea></div>
+                                                      <div class="c-validation"></div>
+                                                      <div class="c-helptext">Enter the range of Lot ID numbers</div>
+                                                  </div>
+                                                  <div class="c-text-singleline c-field c-col-13 c-sml-col-1 c-span-12 c-sml-span-12">
+                                                      <div class="c-label  "><label for="c-43-1617">Reserved Roads</label></div>
+                                                      <div class="c-editor"><input name="developement[rsrv_road]" type="text" id="c-43-1617" placeholder="Reserved Road Numbers"></div>
+                                                      <div class="c-validation"></div>
+                                                  </div>
+                                              </div>
+                                              <div class="c-validation"></div>
+                                          </div>
+                                      </div>
+                                      <div class="c-validation"></div>
+                                  </div>
+                                  <div class="c-button-section">
+                                      <div class="c-action"><button type="button" class="c-page-nav c-page-next-page c-button">Next</button></div>
+                                  </div>
+                                  <div class="c-page-numbering">2 / 4</div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="c-page-page2" style="display: none;">
                             <div class="c-forms-template" >
                                 <div class="c-page toggle-off" >
                                     <div class="c-section c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
@@ -452,188 +634,11 @@
                                         <div class="c-validation"></div>
                                     </div>
                                     <div class="c-button-section">
-                                        <div class="c-action"><button type="button" class="c-page-nav c-page-next-page c-button">Next</button></div>
+                                        <div class="c-action"><button type="button" class="c-page-nav c-page-previous-page c-button">Back</button><button type="button" class="c-page-nav c-page-next-page c-button">Next</button></div>
                                     </div>
                                     <div class="c-page-numbering">1 / 4</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="c-page-page2" style="display: none;">
-                          <div class="c-forms-template">
-                              <div class="c-page toggle-off" >
-                                  <div class="c-section c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
-                                      <div class="c-title">
-                                          <h3>DEVELOPMENT DETAILS</h3>
-                                      </div>
-                                      <div class="">
-                                          <div class="c-text-singleline c-field c-col-1 c-sml-col-1 c-span-16 c-sml-span-12">
-                                              <div class="c-label  "><label for="c-24-1629">Name of Development</label></div>
-                                              <div class="c-editor"><input name="developement[name]" type="text" id="c-24-1629" placeholder="eg  City View Villas"></div>
-                                              <div class="c-validation"></div>
-                                          </div>
-                                          <div class="c-text-singleline c-field c-col-17 c-sml-col-1 c-span-4 c-sml-span-6">
-                                              <div class="c-label  "><label for="c-25-1628">Volume / Folio</label></div>
-                                              <div class="c-editor"><input name="developement[folio_no]" type="text" id="c-25-1628" placeholder=""></div>
-                                              <div class="c-validation"></div>
-                                          </div>
-                                          <div class="c-text-singleline c-field c-col-21 c-sml-col-5 c-span-4 c-sml-span-6">
-                                              <div class="c-label  "><label for="c-26-1627">Plan No.</label></div>
-                                              <div class="c-editor"><input name="developement[plan_no]" type="text" id="c-26-1627" placeholder="Plan number"></div>
-                                              <div class="c-validation"></div>
-                                          </div>
-                                          <div class="c-address c-address-us c-field c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
-                                              <div class="c-label "><label>Address</label></div>
-                                              <div>
-                                                  <div class="c-offscreen"><label for="c-27-1626">Address Line 1</label></div>
-                                                  <div class="c-editor" style="float: left;"><input name="developement[address][line1]" type="text" id="c-27-1626" placeholder="Address Line 1"></div>
-                                                  <div class="c-offscreen"><label for="c-28-1626">Address Line 2</label></div>
-                                                  <div class="c-editor" style="float: left;"><input name="developement[address][line2]" type="text" id="c-28-1626" placeholder="Address Line 2"></div>
-                                                  <div class="c-offscreen"><label for="c-29-1626">City</label></div>
-                                                  <div class="c-editor c-partial-line" style="float: left;"><input name="developement[address][city]" type="text" id="c-29-1626" placeholder="City"></div>
-                                                  <div class="c-offscreen"><label for="c-30-1626">State</label></div>
-                                                  <div class="c-editor c-partial-line" style="float: left;">
-                                                      <div class="c-dropdown">
-                                                          <select name="developement[address][state]" id="c-30-1626" class="c-placeholder-text-styled ">
-                                                              <option value="">State</option>
-                                                              <option value="Armed Forces America">Armed Forces America</option>
-                                                              <option value="Armed Forces">Armed Forces</option>
-                                                              <option value="Armed Forces Pacific">Armed Forces Pacific</option>
-                                                              <option value="Alabama">Alabama</option>
-                                                              <option value="Alaska">Alaska</option>
-                                                              <option value="Arizona">Arizona</option>
-                                                              <option value="Arkansas">Arkansas</option>
-                                                              <option value="California">California</option>
-                                                              <option value="Colorado">Colorado</option>
-                                                              <option value="Connecticut">Connecticut</option>
-                                                              <option value="District of Columbia">District of Columbia</option>
-                                                              <option value="Delaware">Delaware</option>
-                                                              <option value="Florida">Florida</option>
-                                                              <option value="Georgia">Georgia</option>
-                                                              <option value="Guam">Guam</option>
-                                                              <option value="Hawaii">Hawaii</option>
-                                                              <option value="Idaho">Idaho</option>
-                                                              <option value="Illinois">Illinois</option>
-                                                              <option value="Indiana">Indiana</option>
-                                                              <option value="Iowa">Iowa</option>
-                                                              <option value="Kansas">Kansas</option>
-                                                              <option value="Kentucky">Kentucky</option>
-                                                              <option value="Louisiana">Louisiana</option>
-                                                              <option value="Maine">Maine</option>
-                                                              <option value="Maryland">Maryland</option>
-                                                              <option value="Massachusetts">Massachusetts</option>
-                                                              <option value="Michigan">Michigan</option>
-                                                              <option value="Minnesota">Minnesota</option>
-                                                              <option value="Mississippi">Mississippi</option>
-                                                              <option value="Missouri">Missouri</option>
-                                                              <option value="Montana">Montana</option>
-                                                              <option value="Nebraska">Nebraska</option>
-                                                              <option value="New Hampshire">New Hampshire</option>
-                                                              <option value="New Jersey">New Jersey</option>
-                                                              <option value="New Mexico">New Mexico</option>
-                                                              <option value="New York">New York</option>
-                                                              <option value="Nevada">Nevada</option>
-                                                              <option value="North Carolina">North Carolina</option>
-                                                              <option value="North Dakota">North Dakota</option>
-                                                              <option value="Ohio">Ohio</option>
-                                                              <option value="Oklahoma">Oklahoma</option>
-                                                              <option value="Oregon">Oregon</option>
-                                                              <option value="Pennsylvania">Pennsylvania</option>
-                                                              <option value="Puerto Rico">Puerto Rico</option>
-                                                              <option value="Rhode Island">Rhode Island</option>
-                                                              <option value="South Carolina">South Carolina</option>
-                                                              <option value="South Dakota">South Dakota</option>
-                                                              <option value="Tennessee">Tennessee</option>
-                                                              <option value="Texas">Texas</option>
-                                                              <option value="Utah">Utah</option>
-                                                              <option value="Vermont">Vermont</option>
-                                                              <option value="Virgin Islands">Virgin Islands</option>
-                                                              <option value="Virginia">Virginia</option>
-                                                              <option value="Washington">Washington</option>
-                                                              <option value="West Virginia">West Virginia</option>
-                                                              <option value="Wisconsin">Wisconsin</option>
-                                                              <option value="Wyoming">Wyoming</option>
-                                                          </select>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                              <div class="c-validation"></div>
-                                          </div>
-                                          <div class="c-name c-field c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
-                                              <div class="c-label "><label>Development Surveyor</label></div>
-                                              <div>
-                                                  <div class="c-offscreen"><label for="c-32-1625">Title</label></div>
-                                                  <div class="c-editor c-span-1" style="width: 20%; float: left;"><input name="developement[surveyor][title]" type="text" id="c-32-1625" placeholder="Title"></div>
-                                                  <div class="c-offscreen"><label for="c-33-1625">First</label></div>
-                                                  <div class="c-editor c-span-1" style="width: 40%; float: left;"><input name="developement[surveyor][first]" type="text" id="c-33-1625" placeholder="First"></div>
-                                                  <div class="c-offscreen"><label for="c-34-1625">Last</label></div>
-                                                  <div class="c-editor c-span-1" style="width: 40%; float: left;"><input name="developement[surveyor][last]" type="text" id="c-34-1625" placeholder="Last"></div>
-                                              </div>
-                                              <div class="c-validation"></div>
-                                          </div>
-                                          <div class="c-section c-col-1 c-sml-col-1 c-span-24 c-sml-span-12">
-                                              <div class="c-title">
-                                                  <h4>Lots (Subdivisions)</h4>
-                                              </div>
-                                              <div class="">
-                                                  <div class="c-number-integer c-field c-col-1 c-sml-col-1 c-span-8 c-sml-span-12">
-                                                      <div class="c-label  "><label for="c-36-1624">Total # of Lots in numerals</label></div>
-                                                      <div class="c-editor"><input name="developement[t_lots_i]" type="text" id="c-36-1624" placeholder="65"></div>
-                                                      <div class="c-validation"></div>
-                                                      <div class="c-helptext">Total amount of Lots, in numerals</div>
-                                                  </div>
-                                                  <div class="c-text-singleline c-field c-col-9 c-sml-col-1 c-span-16 c-sml-span-12">
-                                                      <div class="c-label  "><label for="c-37-1623">Total Amount of lots in words</label></div>
-                                                      <div class="c-editor"><input name="developement[t_lots_w]" type="text" id="c-37-1623" placeholder="sixty-five" maxlength="50"></div>
-                                                      <div class="c-validation"></div>
-                                                      <div class="c-helptext">Input the total amount of Lots / Subdivisions, in words</div>
-                                                  </div>
-                                                  <div class="c-number-integer c-field c-col-1 c-sml-col-1 c-span-8 c-sml-span-12">
-                                                      <div class="c-label  "><label for="c-38-1622"># of Residential Lots in numerals</label></div>
-                                                      <div class="c-editor"><input name="developement[r_lots_i]" type="text" id="c-38-1622" placeholder="51"></div>
-                                                      <div class="c-validation"></div>
-                                                      <div class="c-helptext">Amount of Residential Lots in numerals</div>
-                                                  </div>
-                                                  <div class="c-text-singleline c-field c-col-9 c-sml-col-1 c-span-16 c-sml-span-12">
-                                                      <div class="c-label  "><label for="c-39-1621"># of Residential Lots in words</label></div>
-                                                      <div class="c-editor"><input name="developement[r_lots_w]" type="text" id="c-39-1621" placeholder="fifty-one" maxlength="50"></div>
-                                                      <div class="c-validation"></div>
-                                                      <div class="c-helptext">Input the amount of Residential Lots in words</div>
-                                                  </div>
-                                                  <div class="c-number-integer c-field c-col-1 c-sml-col-1 c-span-8 c-sml-span-12">
-                                                      <div class="c-label  "><label for="c-40-1620"># of Common Area Lots in numerals</label></div>
-                                                      <div class="c-editor"><input name="developement[c_lots_i]" type="text" id="c-40-1620" placeholder="14"></div>
-                                                      <div class="c-validation"></div>
-                                                      <div class="c-helptext">Input the amount of Common Area Lots in numerals</div>
-                                                  </div>
-                                                  <div class="c-text-singleline c-field c-col-9 c-sml-col-1 c-span-16 c-sml-span-12">
-                                                      <div class="c-label  "><label for="c-41-1619">#of Common Area Lots in words</label></div>
-                                                      <div class="c-editor"><input name="developement[c_lots_w]" type="text" id="c-41-1619" placeholder="fourteen" maxlength="50"></div>
-                                                      <div class="c-validation"></div>
-                                                      <div class="c-helptext">Input the amount of Common Area Lots in words</div>
-                                                  </div>
-                                                  <div class="c-text-multiplelines c-field c-col-1 c-sml-col-1 c-span-12 c-sml-span-12">
-                                                      <div class="c-label  "><label for="c-42-1618">Lot ID numbers</label></div>
-                                                      <div class="c-editor"><textarea name="developement[lot_ids]" id="c-42-1618" placeholder="1 - 45, 51 - 59, 64" type="text" height=""></textarea></div>
-                                                      <div class="c-validation"></div>
-                                                      <div class="c-helptext">Enter the range of Lot ID numbers</div>
-                                                  </div>
-                                                  <div class="c-text-singleline c-field c-col-13 c-sml-col-1 c-span-12 c-sml-span-12">
-                                                      <div class="c-label  "><label for="c-43-1617">Reserved Roads</label></div>
-                                                      <div class="c-editor"><input name="developement[rsrv_road]" type="text" id="c-43-1617" placeholder="Reserved Road Numbers"></div>
-                                                      <div class="c-validation"></div>
-                                                  </div>
-                                              </div>
-                                              <div class="c-validation"></div>
-                                          </div>
-                                      </div>
-                                      <div class="c-validation"></div>
-                                  </div>
-                                  <div class="c-button-section">
-                                      <div class="c-action"><button type="button" class="c-page-nav c-page-previous-page c-button">Back</button><button type="button" class="c-page-nav c-page-next-page c-button">Next</button></div>
-                                  </div>
-                                  <div class="c-page-numbering">2 / 4</div>
-                              </div>
-                          </div>
                       </div>
                       <div class="c-page-page3" style="display: none;">
                           <div class="c-forms-template" >

@@ -14,7 +14,7 @@ class DevController extends Controller
      */
     public function index()
     {
-        //
+        return view('forms.dev');
     }
 
     /**
@@ -63,7 +63,7 @@ class DevController extends Controller
      */
     public function show($id)
     {
-        return view('forms.dev');
+        
     }
 
     /**
@@ -98,5 +98,15 @@ class DevController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateView(Request $request)
+    {   
+        $id = $request->input('key');
+
+        $DevObj = new Development();
+        $response = $DevObj->get_development($id);
+
+        return json_encode($response);
     }
 }

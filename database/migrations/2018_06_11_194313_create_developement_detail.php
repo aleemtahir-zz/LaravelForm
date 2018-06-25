@@ -14,7 +14,7 @@ class CreateDevelopementDetail extends Migration
     public function up()
     {
         Schema::create('tbl_developement_detail', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id')->primary();
             $table->string('name')->nullable();
             $table->string('folio_no')->nullable();
             $table->string('plan_no')->nullable();

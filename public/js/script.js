@@ -145,3 +145,62 @@ $(document).ready(function(){
 
 });
 
+
+
+//Development Form
+
+function fetchRecord()
+{
+	var folio_key = $('#c-25-1628').val();
+
+	if(folio_key)
+	{
+		$.ajaxSetup({
+		  headers: {
+		    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		  }
+		});
+		
+		$.ajax({
+            /* the route pointing to the post function */
+            url: 'updateView',
+            type: 'POST',
+            data: { key : folio_key },
+            dataType: 'JSON',
+            success: function (data) { 
+            	var form_data = data[0];
+
+            	if(data == '')
+            	{	
+            		$('input').val('');
+					$('#c-message').text('*No record found!.') ; 
+            	}
+            	else
+            	{
+            		$('#c-message').text('') ; 
+            		$('input#c-24-1629').val(form_data.name);
+            		$('input#c-26-1627').val(form_data.plan_no);
+            		$('input#c-40-1620').val(form_data.common_lots_i);
+            		$('input#c-41-1619').val(form_data.common_lots_s);
+            		$('input#c-38-1622').val(form_data.residential_lots_i);
+            		$('input#c-39-1621').val(form_data.residential_lots_s);
+            		$('input#c-43-1617').val(form_data.rsrv_road_no);
+            		$('textarea#c-42-1618').val(form_data.lot_ids);
+            		$('input#c-36-1624').val(form_data.total_lots_i);
+            		$('input#c-37-1623').val(form_data.total_lots_s);
+            	}
+
+                console.log(data); 
+            }
+        }); 
+	}
+	else
+	{	
+		$('input').val('');
+		$('textarea').val('');
+		$('#c-message').text('*Please Fill Volume/Folio Field.') ; 
+	}
+
+	
+
+}

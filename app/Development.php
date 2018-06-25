@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Traits\InsertOnDuplicateKey;
 
 class Development extends Model
 {
+    use InsertOnDuplicateKey;
+
     public function add_developer($developer)
     { 
         $address_id   = null;
@@ -133,6 +136,8 @@ class Development extends Model
         $total_lots_s       = null;
         $common_lots_s      = null;
         $residential_lots_s = null;
+        $folio_key = explode(',', $developement['folio_no']);
+        $folio_key = $folio_key[0];
 
         if(!empty($developement['t_lots_i']))
           $total_lots_s = convertNumberToWord($developement['t_lots_i']);
@@ -142,32 +147,10 @@ class Development extends Model
 
         if(!empty($developement['c_lots_i']))
           $common_lots_s = convertNumberToWord($developement['c_lots_i']);
-
-        /*CHECK DEVELOPEMENT DETAIL IF EXIST ALREADY*/
-        $dev_info = DB::table('tbl_developement_detail')
-                       ->select('id')
-                       ->where('name',            '=', $developement['name'])
-                       ->where('folio_no',        '=', $developement['folio_no'])
-                       ->where('plan_no',         '=', $developement['plan_no'])
-                       ->where('address_id',      '=', $address_id)
-                       ->where('surveyor_id',     '=', $officer_id)
-                       ->where('total_lots_i',    '=', $developement['t_lots_i'])
-                       ->where('total_lots_s',    '=', $total_lots_s)
-                       ->where('residential_lots_i', '=', $developement['r_lots_i'])
-                       ->where('residential_lots_s', '=', $residential_lots_s)
-                       ->where('common_lots_i',   '=', $developement['c_lots_i'])
-                       ->where('common_lots_s',   '=', $common_lots_s)
-                       ->where('lot_ids',         '=', $developement['lot_ids'])
-                       ->where('rsrv_road_no',    '=', $developement['rsrv_road'])
-                       ->orderBy('id', 'desc')
-                       ->first();
-
-
-        if( empty($dev_info) ){
-
-          /*INSERT DEVELOPEMENT DETAIL */
-          DB::table('tbl_developement_detail')->insert(
-                [
+        
+        $table_name = 'tbl_developement_detail';
+        $data = [
+                    'id'                => $folio_key, 
                     'name'              => $developement['name'], 
                     'folio_no'          => $developement['folio_no'], 
                     'plan_no'           => $developement['plan_no'], 
@@ -184,20 +167,11 @@ class Development extends Model
                     'common_lots_s'     => $common_lots_s,
                     'lot_ids'           => $developement['lot_ids'],
                     'rsrv_road_no'      => $developement['rsrv_road']
-                ]
-            );
-            /*GET DEV ID */
-            $dev_id = DB::getPdo()->lastInsertId();
-        } 
-        else
-        {
-          $dev_id = $dev_info->id;
+                ];
 
-        }
+        //Insert Update Development Data
+        Development::insertOnDuplicateKey($data,$table_name);
 
-        //echo "<pre>"; print_r($dev_id); echo "</pre>";
-        
-        return $dev_id;
     }
 
     public function add_contractor($contractor)
@@ -344,5 +318,23 @@ class Development extends Model
         return $payment_id;
     }
 
+    function get_development($id='')
+    {
+      if(empty($id))
+        return 0;
+      else
+      {
+        $ids  = explode(',', $id);
+        $id   = $ids[0];  //1st part is key
+
+        /*CHECK DEVELOPER INFO IF EXIST ALREADY*/
+        $dev_info = DB::table('tbl_developement_detail as dvlp')
+                        ->join('tbl_address as dvlp_addr', 'dvlp.address_id', '=', 'dvlp_addr.id')
+                        ->join('tbl_developer_detail as dev', 'dvlp.developer_id', '=', 'dev.id')
+                        ->where('dvlp.id', '=', $id)
+                        ->get();   
+        return $dev_info;
+      }
+    }
 
 }
