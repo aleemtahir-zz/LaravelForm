@@ -2,7 +2,7 @@
 @section('content')
 
 <div id="c-forms-container" class="cognito c-safari c-lrg">
-    <form method="post" action="{{url('development')}}">
+    <form method="post" action="{{url('development')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="c-forms-form" tabindex="0">
             <div class="c-editor" style="display:none;">
@@ -440,7 +440,7 @@
                                                 <div class="c-label  "><label for="c-23-1359">Company Logo</label></div>
                                                 <div class="c-editor c-fileupload" data-allowed-types="jpg,jpeg,gif,png" data-max-file-count="1" data-max-file-size="100">
                                                     <div class="c-fileupload-dropzone c-background-highlight">
-                                                        <div class="c-upload-button" tabindex="0">Upload<input type="file" name="developer[logo]" multiple="" tabindex="-1"></div>
+                                                        <div class="c-upload-button" tabindex="0">Upload<input type="file" name="logo" multiple="" tabindex="-1"></div>
                                                         <span class="c-fileupload-dropzone-message">or drag files here.</span>
                                                     </div>
                                                     <div class="c-validation c-warning"></div>

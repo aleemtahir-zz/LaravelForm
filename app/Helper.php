@@ -376,3 +376,48 @@ function get_foriegn_currency($currency)
   return $currency_id;
 
 }
+
+function upload_logo( $filename='')
+{
+  $target_dir = realpath(dirname(getcwd())).'\uploads\\';
+  $target_file = $target_dir . basename($_FILES[$filename]["name"]);
+  $uploadOk = 1;
+  $msg = '';
+  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+  // Check if image file is a actual image or fake image
+  /*if(isset($_POST["submit"])) {
+      $check = getimagesize($_FILES[$filename]["tmp_name"]);
+      if($check !== false) {
+          $msg = "File is an image - " . $check["mime"] . ".";
+          $uploadOk = 1;
+      } else {
+          $msg = "File is not an image.";
+          $uploadOk = 0;
+      }
+  }*/
+
+  // Check file size
+  if ($_FILES[$filename]["size"] > 500000) {
+      $msg[] = "Sorry, your file is too large.";
+      $uploadOk = 0;
+  }
+  // Allow certain file formats
+  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "xml") {
+      $msg[] = "Sorry, only JPG, JPEG & PNG files are allowed.";
+      $uploadOk = 0;
+  }
+  // Check if $uploadOk is set to 0 by an error
+  if ($uploadOk != 0) 
+  {
+      //pre($_FILES[$filename]["tmp_name"]); die;
+      if (move_uploaded_file($_FILES[$filename]["tmp_name"], $target_file)) {
+          $msg = "The file ". basename( $_FILES[$filename]["name"]). " has been uploaded.";
+      } 
+  }
+
+  $result['status']   = $uploadOk;
+  $result['message']  = $msg;
+  $result['path']     = $target_file;
+
+  return $result;
+}

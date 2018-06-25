@@ -12,8 +12,10 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/upload.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.dm-uploader.min.css')}}">
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js"></script>
 <script type="text/javascript" src="{{asset('js/script.js')}}"></script>   
+<script src="{{asset('js/jquery.dm-uploader.min.js')}}"></script>   
 <script type="text/javascript" crossorigin="anonymous" src="{{asset('js/cognito.js')}}"></script> 

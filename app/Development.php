@@ -45,6 +45,15 @@ class Development extends Model
 
         }  
 
+        //Upload Developer Logo
+        $dev_logo = upload_logo('logo');
+        //pre($dev_logo);
+        $logo_path = "";
+        if($dev_logo['status'] == 1)
+        {
+          $logo_path = $dev_logo['path'];
+        }
+
         //******************
         //ADD DEVELOPER INFO
         //******************
@@ -58,7 +67,7 @@ class Development extends Model
                        ->where('mobile', '=', $developer['mobile'])
                        ->where('email', '=', $developer['email'])
                        ->where('address_id', '=', $address_id)
-                       ->where('logo', '=', $developer['logo'])
+                       ->where('logo', '=', $logo_path)
                        ->orderBy('id', 'desc')
                        ->first();
 
@@ -74,7 +83,7 @@ class Development extends Model
                     'mobile'        => $developer['mobile'],
                     'email'         => $developer['email'],
                     'address_id'    => $address_id,
-                    'logo'          => $developer['logo']
+                    'logo'          => $logo_path
                 ]
             );
             /*GET DEV ID */
@@ -197,7 +206,7 @@ class Development extends Model
         $officer_id  = null;
 
         //UNSET KEYS WHICH ARE EMPTY
-        $this->scanArray($contractor);
+        scanArray($contractor);
 
         //GET ADDRESS ID
         if(!empty($contractor['address'])){
@@ -262,7 +271,7 @@ class Development extends Model
         $fc_id       = null;
 
         //UNSET KEYS WHICH ARE EMPTY
-        $this->scanArray($payment);
+        scanArray($payment);
 
         //GET FORIEGN CURRENCY ID
         if(!empty($payment['fc'])){
@@ -296,10 +305,10 @@ class Development extends Model
                        ->where('j_price_i', '=', $payment['jprice_i'])
                        ->where('j_price_w', '=', $jprice_w)
                        ->where('deposit', '=', $payment['deposit'])
-                       ->where('second_payment', '=', $payment['scnd_pay'])
-                       ->where('third_payment', '=', $payment['thrd_pay'])
-                       ->where('fourth_payment', '=', $payment['frth_pay'])
-                       ->where('final_payment', '=', $payment['fnl_pay'])
+                       ->where('second_payment', '=', $payment['second_pay'])
+                       ->where('third_payment', '=', $payment['third_pay'])
+                       ->where('fourth_payment', '=', $payment['fourth_pay'])
+                       ->where('final_payment', '=', $payment['final_pay'])
                        ->orderBy('id', 'desc')
                        ->first();
 
@@ -315,10 +324,10 @@ class Development extends Model
                     'j_price_i'     => $payment['jprice_i'],
                     'j_price_w'      => $jprice_w,
                     'deposit'       => $payment['deposit'],
-                    'second_payment'=> $payment['scnd_pay'],
-                    'third_payment' => $payment['thrd_pay'],
-                    'fourth_payment'=> $payment['frth_pay'],
-                    'final_payment' => $payment['fnl_pay'],
+                    'second_payment'=> $payment['second_pay'],
+                    'third_payment' => $payment['third_pay'],
+                    'fourth_payment'=> $payment['fourth_pay'],
+                    'final_payment' => $payment['final_pay'],
                 ]
             );
             /*GET CONTRACT PAYMENT ID */

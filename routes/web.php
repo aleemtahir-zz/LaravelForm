@@ -17,3 +17,6 @@ Route::get('/', function () {
 
 Route::resource('property','PropertyController');
 Route::resource('development','DevController');
+Route::resource('payment','PaymentController');
+Route::resource('upload','UploadController');
+Route::get('test', 'UploadController@test');
