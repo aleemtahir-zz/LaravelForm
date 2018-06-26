@@ -149,7 +149,7 @@ $(document).ready(function(){
 
 //Development Form
 
-function fetchRecord()
+function fetchRecordDev()
 {
 	var folio_key = $('#c-25-1628').val();
 

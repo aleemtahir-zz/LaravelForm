@@ -328,10 +328,50 @@ class Development extends Model
         $id   = $ids[0];  //1st part is key
 
         /*CHECK DEVELOPER INFO IF EXIST ALREADY*/
-        $dev_info = DB::table('tbl_developement_detail as dvlp')
-                        ->join('tbl_address as dvlp_addr', 'dvlp.address_id', '=', 'dvlp_addr.id')
-                        ->join('tbl_developer_detail as dev', 'dvlp.developer_id', '=', 'dev.id')
-                        ->where('dvlp.id', '=', $id)
+        $dev_info = DB::table('tbl_developement_detail as dt')
+                        ->select('dt.*',
+                          //Development Address
+                          'dta.line1 as dt_line1','dta.line2 as dt_line2','dta.city as dt_city','dta.state as dt_state',
+                          'dta.country as dt_country',    
+                          //Development Surveyor
+                          'so.title as dt_title','so.first_name as dt_first','so.last_name as dt_last',
+                          //Development Contractor
+                          'c.company_name as c_company_name',
+                          //Contractor Address
+                          'ca.line1 as c_line1','ca.line2 as c_line2','ca.city as c_city','ca.state as c_state',
+                          'ca.country as c_country', 
+                          //Contractor Officer
+                          'co.title as c_title','co.first_name as c_first','co.last_name as c_last','co.suffix as c_suffix',
+                          'co.capacity as c_capacity','co.landline as c_landline',
+                          //Developer                       
+                          'd.company_name as d_company_name','d.phone as d_phone','d.mobile as d_mobile','d.email as d_email',
+                          'd.logo as d_logo',
+                          //Developer Address
+                          'da.line1 as d_line1','da.line2 as d_line2','da.city as d_city','da.state as d_state',
+                          'da.country as d_country',
+                          //Developer Officer 1
+                          'do1.title as d_title1','do1.first_name as d_first1','do1.last_name as d_last1','do1.suffix as d_suffix1',
+                          'do1.capacity as d_capacity1','do1.landline as d_landline1',
+                          //Developer Officer 1
+                          'do2.title as d_title2','do2.first_name as d_first2','do2.last_name as d_last2','do2.suffix as d_suffix2',
+                          'do2.capacity as d_capacity2','do2.landline as d_landline2',
+                          //Contract Payment
+                          'cp.price_i as cp_price_i','cp.j_price_i as cp_j_price_i','cp.deposit as cp_deposit','cp.second_payment as second_pay','cp.third_payment as cp_third_pay','cp.fourth_payment as cp_fourth_pay','cp.final_payment as cp_final_pay',
+                          //Contract Payment Foriegn Currency
+                          'fc.name as fc_name','fc.symbol as fc_symbol','fc.exchange_rate as fc_exchange_rate'
+                        )
+                        ->join('tbl_address as dta', 'dt.address_id', '=', 'dta.id')
+                        ->join('tbl_developer_detail as d', 'dt.developer_id', '=', 'd.id')
+                        ->join('tbl_address as da', 'd.address_id', '=', 'da.id')
+                        ->join('tbl_person_info as so', 'dt.surveyor_id', '=', 'so.id')
+                        ->join('tbl_person_info as do1', 'd.officer_id_1', '=', 'do1.id')
+                        ->join('tbl_person_info as do2', 'd.officer_id_2', '=', 'do2.id')
+                        ->join('tbl_contractor_detail as c', 'dt.contractor_id', '=', 'c.id')
+                        ->join('tbl_address as ca', 'c.address_id', '=', 'ca.id')
+                        ->join('tbl_person_info as co', 'c.officer_id', '=', 'co.id')
+                        ->join('tbl_dev_contract_payment as cp', 'dt.payment_id', '=', 'cp.id')
+                        ->join('tbl_foriegn_currency as fc', 'cp.fc_id', '=', 'fc.id')
+                        ->where('dt.id', '=', $id)
                         ->get();   
         return $dev_info;
       }

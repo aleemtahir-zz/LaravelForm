@@ -45,7 +45,7 @@
                                               <div class="c-validation"></div>
 
                                           </div> 
-                                          <div style="margin-top: 13px;" class="c-text-singleline c-field c-col-21 c-sml-col-5 c-span-5 c-sml-span-6"><button type="button" class="c-button" onclick="fetchRecord()">Fetch Record</button></div>
+                                          <div style="margin-top: 13px;" class="c-text-singleline c-field c-col-21 c-sml-col-5 c-span-5 c-sml-span-6"><button type="button" class="c-button" onclick="fetchRecordDev()">Fetch Record</button></div>
 
                                           <div  id="c-message" class="c-text-singleline c-field c-col-21 c-sml-col-5 c-span-8 c-sml-span-6">
                                           </div> 
