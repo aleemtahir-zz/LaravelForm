@@ -329,36 +329,37 @@ class Development extends Model
 
         /*CHECK DEVELOPER INFO IF EXIST ALREADY*/
         $dev_info = DB::table('tbl_developement_detail as dt')
-                        ->select('dt.*',
+                        ->select('dt.name as dt-name','dt.folio_no as dt-folio_no','dt.plan_no as dt-plan_no','dt.total_lots_i as dt-t_lots_i', 'dt.total_lots_s as dt-t_lots_w', 'dt.residential_lots_i as dt-r_lots_i',
+                          'dt.residential_lots_s as dt-r_lots_w', 'dt.common_lots_i as dt-c_lots_i',
+                          'dt.common_lots_s as dt-c_lots_w', 'dt.lot_ids as dt-lot_ids', 'dt.rsrv_road_no as dt-rsrv_road', 
                           //Development Address
-                          'dta.line1 as dt_line1','dta.line2 as dt_line2','dta.city as dt_city','dta.state as dt_state',
-                          'dta.country as dt_country',    
+                          'dta.line1 as dt-address-line1','dta.line2 as dt-address-line2','dta.city as dt-address-city','dta.state as dt-address-state',
+                          'dta.country as dt-address-country',    
                           //Development Surveyor
-                          'so.title as dt_title','so.first_name as dt_first','so.last_name as dt_last',
+                          'so.title as dt-surveyor-title','so.first_name as dt-surveyor-first','so.last_name as dt-surveyor-last',
                           //Development Contractor
-                          'c.company_name as c_company_name',
+                          'c.company_name as c-company_name',
                           //Contractor Address
-                          'ca.line1 as c_line1','ca.line2 as c_line2','ca.city as c_city','ca.state as c_state',
-                          'ca.country as c_country', 
+                          'ca.line1 as c-address-line1','ca.line2 as c-address-line2','ca.city as c-address-city','ca.state as c-address-state', 'ca.country as c-address-country', 
                           //Contractor Officer
-                          'co.title as c_title','co.first_name as c_first','co.last_name as c_last','co.suffix as c_suffix',
-                          'co.capacity as c_capacity','co.landline as c_landline',
+                          'co.title as c-co-title','co.first_name as c-co-first','co.last_name as c-co-last','co.suffix as c-co-suffix',
+                          'co.capacity as c-co-capacity','co.landline as c-co-landline',
                           //Developer                       
-                          'd.company_name as d_company_name','d.phone as d_phone','d.mobile as d_mobile','d.email as d_email',
-                          'd.logo as d_logo',
+                          'd.company_name as d-company_name','d.mobile as d-mobile','d.email as d-email',
+                          'd.logo as d-logo',
                           //Developer Address
-                          'da.line1 as d_line1','da.line2 as d_line2','da.city as d_city','da.state as d_state',
-                          'da.country as d_country',
+                          'da.line1 as d-address-line1','da.line2 as d-address-line2','da.city as d-address-city','da.state as d-address-state',
+                          'da.country as d-address-country',
                           //Developer Officer 1
-                          'do1.title as d_title1','do1.first_name as d_first1','do1.last_name as d_last1','do1.suffix as d_suffix1',
-                          'do1.capacity as d_capacity1','do1.landline as d_landline1',
+                          'do1.title as d-do1-title1','do1.first_name as d-do1-first1','do1.last_name as d-do1-last1','do1.suffix as d-do1-suffix1',
+                          'do1.capacity as d-do1-capacity1','do1.landline as d-do1-landline1',
                           //Developer Officer 1
-                          'do2.title as d_title2','do2.first_name as d_first2','do2.last_name as d_last2','do2.suffix as d_suffix2',
-                          'do2.capacity as d_capacity2','do2.landline as d_landline2',
+                          'do2.title as d-do2-title2','do2.first_name as d-do2-first2','do2.last_name as d-do2-last2','do2.suffix as d-do2-suffix2',
+                          'do2.capacity as d-do2-capacity2','do2.landline as d-do2-landline2',
                           //Contract Payment
-                          'cp.price_i as cp_price_i','cp.j_price_i as cp_j_price_i','cp.deposit as cp_deposit','cp.second_payment as second_pay','cp.third_payment as cp_third_pay','cp.fourth_payment as cp_fourth_pay','cp.final_payment as cp_final_pay',
+                          'cp.price_i as cp-price_i','cp.j_price_i as cp-jprice_i','cp.deposit as cp-deposit','cp.second_payment as cp-second_pay','cp.third_payment as cp-third_pay','cp.fourth_payment as cp-fourth_pay','cp.final_payment as cp-final_pay',
                           //Contract Payment Foriegn Currency
-                          'fc.name as fc_name','fc.symbol as fc_symbol','fc.exchange_rate as fc_exchange_rate'
+                          'fc.name as cp-fc-name','fc.symbol as cp-fc-symbol','fc.exchange_rate as cp-fc-rate'
                         )
                         ->join('tbl_address as dta', 'dt.address_id', '=', 'dta.id')
                         ->join('tbl_developer_detail as d', 'dt.developer_id', '=', 'd.id')
@@ -372,7 +373,38 @@ class Development extends Model
                         ->join('tbl_dev_contract_payment as cp', 'dt.payment_id', '=', 'cp.id')
                         ->join('tbl_foriegn_currency as fc', 'cp.fc_id', '=', 'fc.id')
                         ->where('dt.id', '=', $id)
-                        ->get();   
+                        ->get(); 
+
+        $mapper = array(
+          'dt'  => 'developement',
+          'd'   => 'developer',
+          'c'   => 'contractor',
+          'cp'  => 'payment',
+        );                
+
+
+        $dev_info = (array) $dev_info[0];
+        //pre($dev_info); die;
+        foreach ($dev_info as $key => $value) 
+        {
+            $pieces = explode('-', $key);
+            $i = $pieces[0];
+            $pieces = array_reverse($pieces);
+            
+            if(count($pieces) == 3){
+              $input = $mapper[$i]."[".$pieces[1]."]"."[".$pieces[0]."]";
+            }
+            else if(count($pieces) == 2){
+              $input = $mapper[$i]."[".$pieces[0]."]";
+            }
+
+            $dev_info[$key]    = array(
+              'key'   => $input,
+              'value' => $value
+            );          
+            
+        }                
+                         
         return $dev_info;
       }
     }

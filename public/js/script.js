@@ -168,7 +168,7 @@ function fetchRecordDev()
             data: { key : folio_key },
             dataType: 'JSON',
             success: function (data) { 
-            	var form_data = data[0];
+            	var form_data = data;
 
             	if(data == '')
             	{	
@@ -178,7 +178,12 @@ function fetchRecordDev()
             	else
             	{
             		$('#c-message').text('') ; 
-            		$('input#c-24-1629').val(form_data.name);
+            		$.each(form_data, function(key, value){
+	            		console.log(key+'  :'+value.key);
+            			console.log($("input[name='"+value.key+"']"));
+
+            			$("input[name='"+value.key+"']").val(value.value);
+	            	});
             		$('input#c-26-1627').val(form_data.plan_no);
             		$('input#c-40-1620').val(form_data.common_lots_i);
             		$('input#c-41-1619').val(form_data.common_lots_s);
@@ -190,7 +195,7 @@ function fetchRecordDev()
             		$('input#c-37-1623').val(form_data.total_lots_s);
             	}
 
-                console.log(data); 
+                
             }
         }); 
 	}
